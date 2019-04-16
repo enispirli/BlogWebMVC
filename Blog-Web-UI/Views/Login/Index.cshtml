@@ -1,0 +1,48 @@
+﻿
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>LOGIN</title>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+    <link href="~/assets/Logincss/Login.css" rel="stylesheet" />
+</head>
+<body>
+
+    <div>
+        <section class="login-block">
+            <div class="container">
+                <div class="row ">
+                    <div class="col login-sec">
+                        <h2 class="text-center">Login Now</h2>
+                        <form class="login-form" method="post">
+                            <div class="form-group">
+                                <label for="exampleInputUserName" class="text-uppercase">Email</label>
+                                <input type="text" class="form-control" placeholder="" name="Email">
+
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputPassword1" class="text-uppercase">Password</label>
+                                <input type="password" class="form-control" placeholder="" name="Password">
+                            </div>
+
+
+                            <div class="form-check">
+                               
+                                <a href="/Login/Register">Not a member yet? <i class="fas fa-running"></i></a>
+                                <button type="submit" class="btn btn-login float-right">Submit</button>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+</body>
+</html>

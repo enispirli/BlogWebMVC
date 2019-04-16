@@ -1,0 +1,158 @@
+﻿@using Entity
+@model Article
+@{
+    ViewBag.Title = "Detail";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Comment</title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <link href="~/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/assets/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" />
+    <link href="~/assets/css/clean-blog.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-theme.min.css" />
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+
+
+    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+
+    <style>
+        #paste {
+            width: 100%;
+            height: 120px;
+            padding: 0px;
+            margin: 0px;
+        }
+
+        .comments {
+            text-align: right
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+
+        <article>
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12 col-md-10 mx-auto">
+                        <h1>@Model.Title</h1>
+                        <p>@Model.ArticleContent</p>
+                        <p>
+                            <span class="meta">
+                                Posted by
+                                <a href="#">@Model.User.Name @Model.User.SurName</a>
+                                @Model.ArticleDate.ToString("dd MMMM HH:mm")
+                            </span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </article>
+        <div>
+            <form method="post" >
+                @if (Session["UserID"] != null)
+
+                {
+                    <div class="panel panel-default widget ">
+                        <div class="panel-body">
+                            <div id="original">Yorumunuzu Giriniz</div>
+
+                            <div>
+                                <textarea id="paste" name="Content"></textarea>
+                                <br />
+                                <br />
+                                <button type="submit" class="btn btn-info btn-pressure btn-sensitive pull-right">Button</button>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </form>
+
+        </div>
+
+
+
+
+
+
+        <div class="panel panel-default widget">
+
+            <div class="panel-body">
+                <ul class="list-group">
+                    @foreach (var comment in Model.GetArticleComments)
+                    {
+                        <li class="list-group-item">
+                            <div class="row">
+
+                                <div class="col-xs-10 col-md-11">
+                                    <div >
+                                        <p>
+                                            @comment.CommentContent
+                                        </p>
+                                        <div class="mic-info comments">
+                                            By: <a href="#">@comment.User.Name @comment.User.SurName</a> @comment.CommentDate.ToString("dd MMMM HH:mm")
+                                        </div>
+                                    </div>
+
+                                    @if (Session["UserID"] != null)
+                                    {
+                                        if ((int)Session["UserID"] == comment.UserID)
+                                        {
+                                            <div class="action">
+                                                <a href="/Comment/Update"  type="button" class="btn btn-primary btn-xs" title="Edit">
+                                                    <span class="glyphicon glyphicon-pencil"></span>
+                                                </a>
+
+                                                <button type="button" class="btn btn-danger btn-xs" title="Delete">
+                                                    <span class="glyphicon glyphicon-trash delete" commentid="@comment.Id"></span>
+                                                </button>
+                                            </div>
+                                        }
+                                    }
+
+                                </div>
+                            </div>
+                        </li>
+
+                    }
+
+                </ul>
+
+            </div>
+        </div>
+    </div>
+  
+    <script>
+        $(document).ready(function () {
+            $(".delete").click(function () {
+                var clicked = $(this)
+                var deleteId = clicked.attr("commentid")
+                if (confirm("Are you sure you want to delete")) {
+                    $.ajax({
+                        url: "/Comment/Sil/" + deleteId,
+                        success: function () {
+                            alert("Deleted")
+                            clicked.parent().parent().parent().fadeOut()
+                        },
+                        error: function () {
+                            alert("There is a problem!")
+                        }
+                    });
+                }
+            })
+        });
+    </script>
+
+</body>
+
+
+</html>
+

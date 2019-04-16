@@ -1,0 +1,50 @@
+﻿@using Entity
+@model List<Article>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+   
+        <div class="row">
+            <div class="col-lg-8 col-md-10 mx-auto">
+                @foreach (var article in Model)
+                {
+
+                <div class="post-preview">
+                    <a href="/Article/Detail/@article.Id">
+                        <h2 class="post-title">
+                            @article.Title
+                        </h2>
+                        <p>
+                            @article.ArticleContent.Substring(0, 50);
+                        </p>
+                    </a>
+
+                    <p class="post-meta">
+                        Posted by
+                        <a href="#">@article.User.Name  @article.User.SurName</a>
+                        <i>@article.ArticleDate.ToString("dd MMMM HH:mm")</i>
+                        <div class="pull-right">
+                            @foreach (var item in @article.GetArticleTags)
+                            {
+                                <span class="label label-default">@item.TagName</span>
+                            }
+                        </div>
+                    </p>
+                   
+                </div>
+                 
+                }
+                <hr>
+                <!-- Pager -->
+                <div class="clearfix">
+                    <a class="btn btn-primary float-right" href="#">Older Posts &rarr;</a>
+                </div>
+            </div>
+        </div>
+
+    
+</div>
+
